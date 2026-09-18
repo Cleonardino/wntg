@@ -49,8 +49,7 @@ class Location(Screen):
             point_a : str = connection.point_a
             point_b : str = connection.point_b
             if ((point_a == self.current_point or point_b == self.current_point) and
-                (not connection.hidden or connection.viewing_key in self.player.owned_keys) and
-                (connection.required_key == "" or connection.required_key in self.player.owned_keys)
+                not connection.is_blocked(self.player.owned_keys)
                 ):
                 # We need : from starting point, accessible if next to it, and 
                 # if hidden, player have viewing key and if a key is also required player have it
