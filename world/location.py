@@ -30,9 +30,10 @@ class Location(Screen):
         manager,
         start : str,
         location_points : dict[str, LocationPoint],
-        connections : list[tuple[str]]
+        connections : list[tuple[str]],
+        player
         ):
-        super().__init__(master=master, manager=manager)
+        super().__init__(master=master, manager=manager, player=player)
         self.current_point : str = start
         self.location_points : dict[str, LocationPoint] = location_points
         self.canvas : tk.Canvas = None
@@ -46,7 +47,12 @@ class Location(Screen):
         for connection in self.connections:
             point_a : str = connection.point_a
             point_b : str = connection.point_b
-            if point_a == self.current_point or point_b == self.current_point:
+            if ((point_a == self.current_point or point_b == self.current_point) and
+                (not connection.hidden or connection.viewing_key in self.player.owned_keys) and
+                (connection.required_key == "" or connection.required_key in self.player.owned_keys)
+                ):
+                # We need : from starting point, accessible if next to it, and 
+                # if hidden, player have viewing key and if a key is also required player have it
                 self.location_points[point_a].button.config(state=tk.NORMAL)
                 self.location_points[point_b].button.config(state=tk.NORMAL)
         

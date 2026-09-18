@@ -4,7 +4,8 @@ from world.constants import *
 class ScreenManager:
     """Owns one instance per registered screen and swaps which frame is
     visible. Screens are never destroyed — just hidden/shown — so their
-    internal state (and the widgets themselves) persist across visits."""
+    internal state (and the widgets themselves) persist across visits.
+    Also update the owned_keys if possible"""
 
     def __init__(self, root):
         self.root = root
@@ -35,10 +36,11 @@ class Screen:
     Subclasses override build() to construct their own frame/widgets.
     """
 
-    def __init__(self, master, manager):
+    def __init__(self, master, manager, player):
         self.master = master
         self.manager = manager
         self.frame = None  # created lazily on first show
+        self.player = player
 
     def get_frame(self):
         """Return this screen's frame, building it on first access."""
