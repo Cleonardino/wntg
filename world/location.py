@@ -104,6 +104,22 @@ class Location(Screen):
         
         self.update_location()
         
+class Connection():
+    def __init__(
+        self,
+        point_a : str,
+        point_b : str,
+        required_key : str = "",
+        hidden : bool = False,
+        viewing_key : str = ""
+        ):
+        self.point_a : str = point_a
+        self.point_b : str = point_b
+        self.required_key : str = required_key
+        self.hidden : bool = hidden
+        self.viewing_key : str = viewing_key
+        
+
 
 class FirstScreen(Screen):
     def build(self):
