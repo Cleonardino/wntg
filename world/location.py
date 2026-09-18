@@ -157,19 +157,17 @@ lc_points : dict[str, LocationPoint] = {
         "Hello",
         10,
         100,
-        hidden=True
     ),
     "blocked": LocationPoint(
         "Hello",
         200,
         10,
-        hidden=False
     )
 }
 
 connections : list[Connection] = [
     Connection("start","mystery"),
     Connection("mystery2","mystery"),
-    Connection("start","blocked"),
-    Connection("start","secret")
+    Connection("start","blocked",required_key="secret1"),
+    Connection("start","secret",hidden=True,required_key="secret2")
 ]
