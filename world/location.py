@@ -36,14 +36,16 @@ class Location(Screen):
         self.current_point : str = start
         self.location_points : dict[str, LocationPoint] = location_points
         self.canvas : tk.Canvas = None
-        self.connections : list[tuple[str]] = connections
+        self.connections : list[Connection] = connections
     
     def update_location(self):
         # Updating accessible location points
         self.location_points[self.current_point].button.config(state=tk.NORMAL)
         for cur_name in self.location_points:
             self.location_points[cur_name].button.config(state=tk.DISABLED)
-        for point_a, point_b in self.connections:
+        for connection in self.connections:
+            point_a : str = connection.point_a
+            point_b : str = connection.point_b
             if point_a == self.current_point or point_b == self.current_point:
                 self.location_points[point_a].button.config(state=tk.NORMAL)
                 self.location_points[point_b].button.config(state=tk.NORMAL)
@@ -63,7 +65,9 @@ class Location(Screen):
         )
         
         # Draw connections
-        for point_a, point_b in self.connections:
+        for connection in self.connections:
+            point_a : str = connection.point_a
+            point_b : str = connection.point_b
             self.canvas.create_line(
                 self.location_points[point_a].x + 20,
                 self.location_points[point_a].y + 20,
@@ -141,13 +145,13 @@ lc_points : dict[str, LocationPoint] = {
         "Hello",
         500,
         500,
-        given_key="the_key"
+        given_key="secret1"
     ),
     "mystery2": LocationPoint(
         "Hello",
         500,
         600,
-        given_key="secret_key"
+        given_key="secret2"
     ),
     "secret": LocationPoint(
         "Hello",
@@ -163,9 +167,9 @@ lc_points : dict[str, LocationPoint] = {
     )
 }
 
-connections = [
-    ("start","mystery"),
-    ("mystery2","mystery"),
-    ("start","blocked"),
-    ("start","secret")
+connections : list[Connection] = [
+    Connection("start","mystery"),
+    Connection("mystery2","mystery"),
+    Connection("start","blocked"),
+    Connection("start","secret")
 ]
