@@ -1,5 +1,6 @@
 from world.screen import Screen
 from world.constants import *
+from world.player import Player
 import tkinter as tk
 
 class LocationPoint():
@@ -31,7 +32,7 @@ class Location(Screen):
         start : str,
         location_points : dict[str, LocationPoint],
         connections : list[tuple[str]],
-        player
+        player : Player
         ):
         super().__init__(master=master, manager=manager, player=player)
         self.current_point : str = start
@@ -103,8 +104,11 @@ class Location(Screen):
     def go_to(self, destination : str):
         if destination == self.current_point:
             # Going to current point, exploring
-            # TODO
             print("exploring " + destination)
+            to_give : str = self.location_points[destination].given_key
+            if to_give:
+                self.player.add_key(to_give)
+                print("given key: " + to_give)
             return
         
         print("going to " + destination)
@@ -120,17 +124,19 @@ class Connection():
         point_a : str,
         point_b : str,
         required_key : str = "",
-        hidden : bool = False,
         viewing_key : str = ""
         ):
         self.point_a : str = point_a
         self.point_b : str = point_b
         self.required_key : str = required_key
-        self.hidden : bool = hidden
         self.viewing_key : str = viewing_key
+    
+    def is_blocked(self, owned_keys : dict[str]):
+        return (
+            (self.viewing_key != "" and not self.viewing_key in owned_keys) or
+            (self.required_key != "" and not self.required_key in owned_keys)
+            )
         
-
-
 class FirstScreen(Screen):
     def build(self):
         frame = tk.Frame(self.master, bg=BG_COLOR)
@@ -175,5 +181,5 @@ connections : list[Connection] = [
     Connection("start","mystery"),
     Connection("mystery2","mystery"),
     Connection("start","blocked",required_key="secret1"),
-    Connection("start","secret",hidden=True,required_key="secret2")
+    Connection("start","secret",viewing_key="secret2")
 ]

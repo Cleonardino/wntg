@@ -1,5 +1,6 @@
 import tkinter as tk
 from world.constants import *
+from world.player import Player
 
 class ScreenManager:
     """Owns one instance per registered screen and swaps which frame is
@@ -36,11 +37,11 @@ class Screen:
     Subclasses override build() to construct their own frame/widgets.
     """
 
-    def __init__(self, master, manager, player):
+    def __init__(self, master, manager, player : Player):
         self.master = master
         self.manager = manager
         self.frame = None  # created lazily on first show
-        self.player = player
+        self.player : Player = player
 
     def get_frame(self):
         """Return this screen's frame, building it on first access."""
