@@ -3,6 +3,7 @@ from world.constants import *
 from world.screen import ScreenManager
 from world.location import FirstScreen, Location, lc_points, connections
 from world.player import player
+from world.event_ribbon import EventRibbon
 
 class App(tk.Tk):
     def __init__(self):
@@ -15,6 +16,8 @@ class App(tk.Tk):
         self.manager.register("second", Location(self, self.manager, "start", lc_points, connections, player))
         
         self.manager.show("first")
+        self.event_ribbon : EventRibbon = EventRibbon(self)
+        self.event_ribbon.get_frame().place(x=0,y=0)
 
 
 if __name__ == "__main__":

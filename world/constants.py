@@ -1,10 +1,15 @@
 BG_COLOR = "black"
 FG_COLOR = "white"
+
+NORMAL_M_COLOR = "white"
+IMPORT_M_COLOR = "lime"
 PLAYER_COLOR = "orange"
 FONT = ("Consolas", 14)
 
 WINDOW_WIDTH = 960
 WINDOW_HEIGHT = 720
+
+EVENT_RIBBON_ELEM_HEIGHT = 20
 
 LINES_OFFSET = (20, 20)
 PLAYER_OFFSET = (0, 45)
