@@ -62,7 +62,7 @@ class Screen:
         return label
 
     def make_button(self, parent, text, x, y, command):
-        border = tk.Frame(parent, bg="white", padx=2, pady=2)
+        border = tk.Frame(parent, bg=FG_COLOR, padx=2, pady=2)
         border.place(x=x, y=y)
 
         button = tk.Button(
