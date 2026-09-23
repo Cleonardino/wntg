@@ -17,6 +17,7 @@ class App(tk.Tk):
         
         self.manager.show("first")
         self.event_ribbon : EventRibbon = EventRibbon(self)
+        self.manager.add_overlay(self.event_ribbon)
 
 
 if __name__ == "__main__":

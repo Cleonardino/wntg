@@ -16,6 +16,9 @@ class ScreenManager:
 
     def register(self, name, screen):
         self.screens[name] = screen
+    
+    def add_overlay(self, overlay : tk.Widget):
+        self.overlays.append(overlay)
 
     def show(self, name):
         if name not in self.screens:
