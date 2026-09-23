@@ -16,7 +16,7 @@ class App(tk.Tk):
         self.manager.register("second", Location(self, self.manager, "start", lc_points, connections, player))
         
         self.manager.show("first")
-        self.event_ribbon : EventRibbon = EventRibbon(self)
+        self.event_ribbon : EventRibbon = EventRibbon(self, displayed_count=3)
         self.manager.add_overlay(self.event_ribbon)
 
 

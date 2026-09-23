@@ -10,15 +10,14 @@ class EventRibbon():
         for i in range(displayed_count):
             cur_label = tk.Label(
                 self.master,
-                text="test",
-                fg="white",
-                bg="red",
+                text="",
+                fg=FG_COLOR,
+                bg=BG_COLOR,
                 font=FONT
                 )
             
             cur_label.place(x=0,y=EVENT_RIBBON_ELEM_HEIGHT * i)
             self.labels.append(cur_label)
-        self.register_message("coucou")
     
     def tkraise(self):
         for label in self.labels:
@@ -28,5 +27,7 @@ class EventRibbon():
         # Push front all messages. first label message (more ancient is not kept)
         for i in range(len(self.labels) - 1):
             self.labels[i].config(text=self.labels[i+1].cget("text"))
+            self.labels[i].config(fg=self.labels[i+1].cget("fg"))
         # Set new message
         self.labels[-1].config(text=message)
+        self.labels[-1].config(fg=color)
