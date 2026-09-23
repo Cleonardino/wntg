@@ -18,10 +18,15 @@ class EventRibbon():
             
             cur_label.place(x=0,y=EVENT_RIBBON_ELEM_HEIGHT * i)
             self.labels.append(cur_label)
+        self.register_message("coucou")
     
     def tkraise(self):
         for label in self.labels:
             label.tkraise()
     
-    def register_message(self, message : str, color : str):
-        pass
+    def register_message(self, message : str, color : str = NORMAL_M_COLOR):
+        # Push front all messages. first label message (more ancient is not kept)
+        for i in range(len(self.labels) - 1):
+            self.labels[i].config(text=self.labels[i+1].cget("text"))
+        # Set new message
+        self.labels[-1].config(text=message)
