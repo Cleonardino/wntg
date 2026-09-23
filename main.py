@@ -17,7 +17,6 @@ class App(tk.Tk):
         
         self.manager.show("first")
         self.event_ribbon : EventRibbon = EventRibbon(self)
-        self.event_ribbon.get_frame().place(x=0,y=0)
 
 
 if __name__ == "__main__":

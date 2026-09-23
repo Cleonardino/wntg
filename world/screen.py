@@ -10,6 +10,7 @@ class ScreenManager:
 
     def __init__(self, root):
         self.root = root
+        self.overlays : list[tk.Widget] = [] # List of widget to keep in front
         self.screens = {}  # name -> Screen instance
         self.current_screen = None
 
@@ -26,6 +27,8 @@ class ScreenManager:
         screen = self.screens[name]
         screen.get_frame().place(x=0, y=0, relwidth=1, relheight=1)
         self.current_screen = screen
+        for overlay in self.overlays:
+            overlay.tkraise()
 
 class Screen:
     """Base class for a screen. NOT a tk.Frame itself — instead, build()
