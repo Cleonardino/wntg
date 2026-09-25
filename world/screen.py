@@ -14,7 +14,7 @@ class ScreenManager:
         self.overlays : list[tk.Widget] = [] # List of widget to keep in front
         self.screens : dict[str, Screen] = {}  # name -> Screen instance
         self.current_screen : Screen = None
-        self.desc_button = None
+        self.desc_button : tk.Button = None
 
     def register(self, name, screen):
         self.screens[name] = screen
@@ -38,20 +38,21 @@ class ScreenManager:
     def show_description(self, text : str):
         """Show an exploration description
         """
-        self.desc_button : tk.Button = tk.Button(
+        self.desc_button = tk.Button(
             self.root,
             anchor='center',
             text=text,
             fg= FG_COLOR,
             bg=BG_COLOR,
+            font=FONT,
             command=self.remove_description
         )
-        self.desc_button.pack()
+        self.desc_button.pack(side="top", pady=100, anchor="center")
         self.current_screen.reset_state(False)
         
         
     def remove_description(self):
-        self.desc_button.place_forget()
+        self.desc_button.pack_forget()
         self.desc_button = None
         self.current_screen.reset_state(True)
 
