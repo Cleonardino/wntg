@@ -49,8 +49,8 @@ class Location(Screen):
         for cur_name in self.location_points:
             explored_string : str = "*"
             if self.location_points[cur_name].explored:
-                explored_string = ""
-            self.location_points[cur_name].button.config(state=tk.DISABLED, text=explored_string + cur_name)
+                explored_string = " "
+            self.location_points[cur_name].button.config(state=tk.DISABLED, text=explored_string + cur_name + " ")
         for connection in self.connections:
             point_a : str = connection.point_a
             point_b : str = connection.point_b
