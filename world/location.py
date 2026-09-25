@@ -24,6 +24,7 @@ class LocationPoint():
         self.y = y
         self.given_key = given_key
         self.button : tk.Button = None
+        self.explored : bool = False
 
 class Location(Screen):
     def __init__(
@@ -46,7 +47,10 @@ class Location(Screen):
         # Updating accessible location points
         self.location_points[self.current_point].button.config(state=tk.NORMAL)
         for cur_name in self.location_points:
-            self.location_points[cur_name].button.config(state=tk.DISABLED)
+            explored_string : str = "*"
+            if self.location_points[cur_name].explored:
+                explored_string = ""
+            self.location_points[cur_name].button.config(state=tk.DISABLED, text=explored_string + cur_name)
         for connection in self.connections:
             point_a : str = connection.point_a
             point_b : str = connection.point_b
@@ -92,7 +96,7 @@ class Location(Screen):
         for cur_name in self.location_points:
             self.location_points[cur_name].button = self.make_button(
                 frame,
-                cur_name,
+                "",
                 self.location_points[cur_name].x,
                 self.location_points[cur_name].y,
                 lambda name=cur_name: self.go_to(name)
@@ -114,6 +118,7 @@ class Location(Screen):
             # Going to current point, exploring
             print("exploring " + destination)
             self.manager.show_description(self.location_points[destination].exploration)
+            self.location_points[destination].explored = True
             to_give : str = self.location_points[destination].given_key
             if to_give:
                 if self.player.add_key(to_give):
