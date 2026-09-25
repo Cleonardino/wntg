@@ -174,13 +174,21 @@ def build_locationpoints(input : dict) -> dict[str, LocationPoint]:
             input[name]["desc"],
             input[name]["x"],
             input[name]["y"],
-            input[name].get("given_key","")
+            given_key=input[name].get("given_key","")
             )
     return result
 
-connections : list[Connection] = [
-    Connection("start","mystery"),
-    Connection("mystery2","mystery"),
-    Connection("start","blocked",required_key="secret1"),
-    Connection("start","secret",viewing_key="secret2")
-]
+def build_connections(input : list) -> list[Connection]:
+    """Build a list of Connections based on a serialized connections list
+    """
+    result : list[Connection] = []
+    for connection in input:
+        result.append(
+            Connection(
+                connection["point_a"],
+                connection["point_b"],
+                required_key=connection.get("required_key",""),
+                viewing_key=connection.get("viewing_key","")
+            )
+        )
+    return result

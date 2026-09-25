@@ -1,7 +1,7 @@
 import tkinter as tk
 from world.constants import *
 from world.screen import ScreenManager
-from world.location import FirstScreen, Location, connections, build_locationpoints
+from world.location import FirstScreen, Location, build_locationpoints, build_connections
 from world.player import Player
 from world.event_ribbon import EventRibbon
 from world.dataloader import possible_keys, locations_dict
@@ -17,7 +17,7 @@ class App(tk.Tk):
         self.player : Player = Player(possible_keys)
         
         self.manager.register("first", FirstScreen(self, self.manager, self.player, self.event_ribbon))
-        self.manager.register("second", Location(self, self.manager, "start", build_locationpoints(locations_dict["second"]["points"]), connections, self.player, self.event_ribbon))
+        self.manager.register("second", Location(self, self.manager, "start", build_locationpoints(locations_dict["second"]["points"]), build_connections(locations_dict["second"]["connections"]), self.player, self.event_ribbon))
         
         self.manager.show("first")
         self.manager.add_overlay(self.event_ribbon)
