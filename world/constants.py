@@ -17,3 +17,4 @@ PLAYER_SIZE = (20, 20)
 
 # Paths
 KEYS_PATH = "data/keys.json"
+LOCATIONS_DIR_PATH = "data/locations"

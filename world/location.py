@@ -165,35 +165,18 @@ class FirstScreen(Screen):
     def go_next(self):
         self.manager.show("second")
 
-lc_points : dict[str, LocationPoint] = {
-    "start": LocationPoint(
-        "You explored start\nIt is, well... a good start I think\nThis text is really long on purpose as a matter of testing",
-        10,
-        10
-    ),
-    "mystery": LocationPoint(
-        "Hello",
-        500,
-        500,
-        given_key="secret1"
-    ),
-    "mystery2": LocationPoint(
-        "Hello",
-        500,
-        600,
-        given_key="secret2"
-    ),
-    "secret": LocationPoint(
-        "Hello",
-        10,
-        100,
-    ),
-    "blocked": LocationPoint(
-        "Hello",
-        200,
-        10,
-    )
-}
+def build_locationpoints(input : dict) -> dict[str, LocationPoint]:
+    """Build a dictionnary of Location Points based on a serialized locationpoints dictionnary
+    """
+    result : dict[str, LocationPoint] = {}
+    for name in input:
+        result[name] = LocationPoint(
+            input[name]["desc"],
+            input[name]["x"],
+            input[name]["y"],
+            input[name].get("given_key","")
+            )
+    return result
 
 connections : list[Connection] = [
     Connection("start","mystery"),

@@ -1,0 +1,51 @@
+{
+	"points" : {
+		"start": {
+			"desc" : "You explored start\nIt is, well... a good start I think\nThis text is really long on purpose as a matter of testing",
+			"x" : 10,
+			"y" : 10
+		},
+		"mystery": {
+			"desc" : "Hello there\nIt's the first mystery",
+			"x" : 500,
+			"y" : 500,
+			"given_key" : "secret1"
+		},
+		"mystery2": {
+			"desc" : "Hello there\nIt's the second mystery",
+			"x" : 500,
+			"y" : 600,
+			"given_key" : "secret2"
+		},
+		"secret": {
+			"desc" : "Hello there\nYou reached a secret place",
+			"x" : 10,
+			"y" : 100
+		},
+		"blocked": {
+			"desc" : "Hello there\nYou reached a blocked place",
+			"x" : 200,
+			"y" : 10
+		}
+	},
+	"connections" : [
+		{
+			"point_a" : "start",
+			"point_b" : "mystery"
+		},
+		{
+			"point_a" : "mystery2",
+			"point_b" : "mystery"
+		},
+		{
+			"point_a" : "start",
+			"point_b" : "blocked",
+			"required_key" : "secret1"
+		},
+		{
+			"point_a" : "start",
+			"point_b" : "secret",
+			"viewing_key" : "secret2"
+		}
+	]
+}
