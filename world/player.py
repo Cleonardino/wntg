@@ -17,11 +17,13 @@ class Player:
 
 possibles = {
 	"secret1" : {
-		"desc" : "First secret",
-		"color" : PLAYER_COLOR
+		"name" : "A true secret",
+		"type" : "explore"
 	},
     "secret2" : {
-		"desc" : "Second secret",
+		"name" : "Another true secret",
+  		"type" : "knowledge",
+		"desc" : "The secret is that you can in fact click on the button !",
 		"color" : PLAYER_COLOR
 	}
 }

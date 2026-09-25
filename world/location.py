@@ -1,6 +1,7 @@
 from world.screen import Screen
 from world.constants import *
 from world.player import Player
+from world.event_ribbon import EventRibbon
 import tkinter as tk
 
 class LocationPoint():
@@ -32,9 +33,10 @@ class Location(Screen):
         start : str,
         location_points : dict[str, LocationPoint],
         connections : list[tuple[str]],
-        player : Player
+        player : Player,
+        event_ribbon : EventRibbon
         ):
-        super().__init__(master=master, manager=manager, player=player)
+        super().__init__(master=master, manager=manager, player=player, event_ribbon=event_ribbon)
         self.current_point : str = start
         self.location_points : dict[str, LocationPoint] = location_points
         self.canvas : tk.Canvas = None
@@ -108,6 +110,7 @@ class Location(Screen):
             if to_give:
                 self.player.add_key(to_give)
                 print("given key: " + to_give)
+                self.event_ribbon.register_message("You found " + to_give)
             return
         
         print("going to " + destination)
