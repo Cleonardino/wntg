@@ -1,0 +1,12 @@
+{
+	"secret1" : {
+		"name" : "A true secret",
+		"type" : "explore"
+	},
+    "secret2" : {
+		"name" : "Another true secret",
+  		"type" : "knowledge",
+		"desc" : "The secret is that you can in fact click on the button !",
+		"color" : "orange"
+	}
+}

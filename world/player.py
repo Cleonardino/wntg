@@ -21,21 +21,3 @@ class Player:
     
     def get_key_name(self, id : str) -> bool:
         return self.possible_keys[id]["name"]
-
-possibles = {
-	"secret1" : {
-		"name" : "A true secret",
-		"type" : "explore"
-	},
-    "secret2" : {
-		"name" : "Another true secret",
-  		"type" : "knowledge",
-		"desc" : "The secret is that you can in fact click on the button !",
-		"color" : PLAYER_COLOR
-	}
-}
-
-player = Player(
-	possibles,
-	{}
-)
