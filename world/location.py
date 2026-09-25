@@ -108,9 +108,9 @@ class Location(Screen):
             print("exploring " + destination)
             to_give : str = self.location_points[destination].given_key
             if to_give:
-                self.player.add_key(to_give)
-                print("given key: " + to_give)
-                self.event_ribbon.register_message("You found " + to_give)
+                if self.player.add_key(to_give):
+                    print("given key: " + to_give)
+                    self.event_ribbon.register_message("You found " + to_give)
             return
         
         print("going to " + destination)

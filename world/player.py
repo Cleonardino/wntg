@@ -12,8 +12,12 @@ class Player:
     def has_key(self, name : str):
         return name in self.owned_keys
     
-    def add_key(self, name : str):
+    # Try to add the key, return if key was successfully added. Key is not added if already present
+    def add_key(self, name : str) -> bool:
+        if name in self.owned_keys.keys():
+            return False
         self.owned_keys[name] = True
+        return True
 
 possibles = {
 	"secret1" : {

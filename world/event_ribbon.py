@@ -16,7 +16,7 @@ class EventRibbon():
                 font=FONT
                 )
             
-            cur_label.place(x=0,y=EVENT_RIBBON_ELEM_HEIGHT * i)
+            cur_label.place(x=0,y=EVENT_RIBBON_ELEM_HEIGHT * i + 5)
             self.labels.append(cur_label)
     
     def tkraise(self):
