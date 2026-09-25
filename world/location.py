@@ -118,7 +118,7 @@ class Location(Screen):
             if to_give:
                 if self.player.add_key(to_give):
                     print("given key: " + to_give)
-                    self.event_ribbon.register_message("You found " + to_give)
+                    self.event_ribbon.register_message("You found " + self.player.get_key_name(to_give))
             return
         
         print("going to " + destination)

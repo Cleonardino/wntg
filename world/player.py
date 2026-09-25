@@ -9,15 +9,18 @@ class Player:
         self.possible_keys = possible_keys.copy()
         self.owned_keys = owned_keys.copy()
     
-    def has_key(self, name : str):
-        return name in self.owned_keys
+    def has_key(self, id : str):
+        return id in self.owned_keys
     
     # Try to add the key, return if key was successfully added. Key is not added if already present
-    def add_key(self, name : str) -> bool:
-        if name in self.owned_keys.keys():
+    def add_key(self, id : str) -> bool:
+        if self.has_key(id):
             return False
-        self.owned_keys[name] = True
+        self.owned_keys[id] = True
         return True
+    
+    def get_key_name(self, id : str) -> bool:
+        return self.possible_keys[id]["name"]
 
 possibles = {
 	"secret1" : {
@@ -34,5 +37,5 @@ possibles = {
 
 player = Player(
 	possibles,
-
+	{}
 )
