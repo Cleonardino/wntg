@@ -12,8 +12,9 @@ class ScreenManager:
     def __init__(self, root):
         self.root = root
         self.overlays : list[tk.Widget] = [] # List of widget to keep in front
-        self.screens = {}  # name -> Screen instance
-        self.current_screen = None
+        self.screens : dict[str, Screen] = {}  # name -> Screen instance
+        self.current_screen : Screen = None
+        self.desc_button = None
 
     def register(self, name, screen):
         self.screens[name] = screen
@@ -33,6 +34,26 @@ class ScreenManager:
         self.current_screen = screen
         for overlay in self.overlays:
             overlay.tkraise()
+    
+    def show_description(self, text : str):
+        """Show an exploration description
+        """
+        self.desc_button : tk.Button = tk.Button(
+            self.root,
+            anchor='center',
+            text=text,
+            fg= FG_COLOR,
+            bg=BG_COLOR,
+            command=self.remove_description
+        )
+        self.desc_button.pack()
+        self.current_screen.reset_state(False)
+        
+        
+    def remove_description(self):
+        self.desc_button.place_forget()
+        self.desc_button = None
+        self.current_screen.reset_state(True)
 
 class Screen:
     """Base class for a screen. NOT a tk.Frame itself — instead, build()
@@ -46,12 +67,12 @@ class Screen:
 
     def __init__(self, master, manager, player : Player, event_ribbon : EventRibbon):
         self.master = master
-        self.manager = manager
+        self.manager : ScreenManager = manager
         self.frame = None  # created lazily on first show
         self.player : Player = player
         self.event_ribbon : EventRibbon = event_ribbon
 
-    def get_frame(self):
+    def get_frame(self) -> tk.Widget:
         """Return this screen's frame, building it on first access."""
         if self.frame is None:
             self.frame = self.build()
@@ -89,3 +110,8 @@ class Screen:
         )
         button.pack()
         return button
+    
+    def reset_state(activated : bool) -> None:
+        """Override in subclasses. Must make the screen activated or not,
+        along with all its widgets. Reset all widget to the desired state."""
+        raise NotImplementedError

@@ -19,7 +19,7 @@ class LocationPoint():
         y : int,
         given_key : str = "",
         ):
-        self.exploration = exploration
+        self.exploration : str = exploration
         self.x = x
         self.y = y
         self.given_key = given_key
@@ -102,10 +102,18 @@ class Location(Screen):
         
         return frame
     
+    def reset_state(self, activated):
+        if activated:
+            self.update_location()
+        else:
+            for cur_name in self.location_points:
+                self.location_points[cur_name].button.config(state=tk.DISABLED)
+    
     def go_to(self, destination : str):
         if destination == self.current_point:
             # Going to current point, exploring
             print("exploring " + destination)
+            self.manager.show_description(self.location_points[destination].exploration)
             to_give : str = self.location_points[destination].given_key
             if to_give:
                 if self.player.add_key(to_give):
@@ -146,12 +154,15 @@ class FirstScreen(Screen):
         self.make_button(frame, "Go to second screen", 380, 400, self.go_next)
         return frame
 
+    def reset_state(activated):
+        pass
+    
     def go_next(self):
         self.manager.show("second")
 
 lc_points : dict[str, LocationPoint] = {
     "start": LocationPoint(
-        "You explored start",
+        "You explored start\nIt is, well... a good start I think\nThis text is really long on purpose as a matter of testing",
         10,
         10
     ),
