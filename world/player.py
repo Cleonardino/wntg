@@ -4,7 +4,7 @@ class Player:
     def __init__(
 		self,
 		possible_keys : dict[str, dict],
-		owned_keys : dict[str] = {}
+		owned_keys : set[str] = {}
 		):
         self.possible_keys = possible_keys.copy()
         self.owned_keys = owned_keys.copy()
@@ -16,7 +16,7 @@ class Player:
     def add_key(self, id : str) -> bool:
         if self.has_key(id):
             return False
-        self.owned_keys[id] = True
+        self.owned_keys.add(id)
         return True
     
     def get_key_name(self, id : str) -> bool:

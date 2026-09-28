@@ -2,7 +2,7 @@ from world.screen import Screen
 from world.constants import *
 from world.player import Player
 from world.event_ribbon import EventRibbon
-import tkinter as tk
+import tkinter as tk    
 
 class LocationPoint():
     """A point inside a vaste location.
@@ -24,7 +24,23 @@ class LocationPoint():
         self.y = y
         self.given_key = given_key
         self.button : tk.Button = None
+        self.border : tk.Frame = None
+        self.visible : bool = True
         self.explored : bool = False
+    
+    # Set visibility of button
+    def set_button_visibility(self, visible : bool):
+        if visible == self.visible:
+            return
+        if visible:
+            # Show button and border
+            self.border.place(
+                x=self.x,
+                y=self.y
+            )
+        else:
+            # Hide button and border
+            self.border.place_forget()
 
 class Location(Screen):
     def __init__(
@@ -44,6 +60,13 @@ class Location(Screen):
         self.connections : list[Connection] = connections
     
     def update_location(self):
+        # Accessible locations
+        visible_locations : set[str] = compute_connected(
+            connect_list=self.connections,
+            cur_point=self.current_point,
+            owned_keys=self.player.owned_keys
+        )
+        
         # Updating accessible location points
         self.location_points[self.current_point].button.config(state=tk.NORMAL)
         for cur_name in self.location_points:
@@ -51,6 +74,9 @@ class Location(Screen):
             if self.location_points[cur_name].explored:
                 explored_string = " "
             self.location_points[cur_name].button.config(state=tk.DISABLED, text=explored_string + cur_name + " ")
+            # Display if accessible
+            self.location_points[cur_name].set_button_visibility(cur_name in visible_locations)
+            
         for connection in self.connections:
             point_a : str = connection.point_a
             point_b : str = connection.point_b
@@ -62,9 +88,9 @@ class Location(Screen):
                 self.location_points[point_a].button.config(state=tk.NORMAL)
                 self.location_points[point_b].button.config(state=tk.NORMAL)
         
-        self.update_canvas()
+        self.update_canvas(visible_locations)
     
-    def update_canvas(self):
+    def update_canvas(self, visible_locations):
         self.canvas.delete("all")
         
         # Draw character
@@ -80,13 +106,14 @@ class Location(Screen):
         for connection in self.connections:
             point_a : str = connection.point_a
             point_b : str = connection.point_b
-            self.canvas.create_line(
-                self.location_points[point_a].x + 20,
-                self.location_points[point_a].y + 20,
-                self.location_points[point_b].x + 20,
-                self.location_points[point_b].y + 20,
-                fill=FG_COLOR
-            )
+            if point_a in visible_locations and point_b in visible_locations:
+                self.canvas.create_line(
+                    self.location_points[point_a].x + 20,
+                    self.location_points[point_a].y + 20,
+                    self.location_points[point_b].x + 20,
+                    self.location_points[point_b].y + 20,
+                    fill=FG_COLOR
+                )
     
     def build(self):
         frame = tk.Frame(self.master, bg=BG_COLOR)
@@ -94,7 +121,10 @@ class Location(Screen):
         self.canvas.place(x=0,y=0)
         
         for cur_name in self.location_points:
-            self.location_points[cur_name].button = self.make_button(
+            (
+                self.location_points[cur_name].button,
+                self.location_points[cur_name].border
+                ) = self.make_button(
                 frame,
                 "",
                 self.location_points[cur_name].x,
@@ -146,12 +176,42 @@ class Connection():
         self.required_key : str = required_key
         self.viewing_key : str = viewing_key
     
-    def is_blocked(self, owned_keys : dict[str]):
+    def is_hidden(self, owned_keys : set[str]):
+        return self.viewing_key != "" and not self.viewing_key in owned_keys
+    
+    def is_blocked(self, owned_keys : set[str]):
         return (
-            (self.viewing_key != "" and not self.viewing_key in owned_keys) or
+            self.is_hidden(owned_keys) or
             (self.required_key != "" and not self.required_key in owned_keys)
             )
         
+def compute_connected(
+    connect_list : list[Connection],
+    cur_point : str,
+    owned_keys : set[str],
+    cur_result : set[str] = set()
+    ) -> dict[str]:
+    """Compute the connected graph based on starting LocationPoint. Return a dict
+    of visible LocationPoint's names"""
+    result : set[str] = cur_result
+    for connection in connect_list:
+        if not connection.is_hidden(owned_keys):
+            # Connection not blocked
+            neighbour : str = None
+            if connection.point_a == cur_point :
+                neighbour = connection.point_b
+            if connection.point_b == cur_point :
+                neighbour = connection.point_a
+            if neighbour and neighbour not in result:
+                result.add(neighbour)
+                result = compute_connected(
+                    connect_list=connect_list,
+                    cur_point=neighbour,
+                    owned_keys=owned_keys,
+                    cur_result=result
+                )
+    return result
+
 class FirstScreen(Screen):
     def build(self):
         frame = tk.Frame(self.master, bg=BG_COLOR)

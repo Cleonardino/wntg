@@ -91,7 +91,7 @@ class Screen:
         label.place(x=x, y=y)
         return label
 
-    def make_button(self, parent, text, x, y, command):
+    def make_button(self, parent, text, x, y, command) -> tuple[tk.Button, tk.Frame]:
         border = tk.Frame(parent, bg=FG_COLOR, padx=2, pady=2)
         border.place(x=x, y=y)
 
@@ -110,7 +110,7 @@ class Screen:
             pady=10,
         )
         button.pack()
-        return button
+        return (button, border)
     
     def reset_state(activated : bool) -> None:
         """Override in subclasses. Must make the screen activated or not,
