@@ -189,11 +189,13 @@ def compute_connected(
     connect_list : list[Connection],
     cur_point : str,
     owned_keys : set[str],
-    cur_result : set[str] = set()
-    ) -> dict[str]:
+    cur_result : set[str] = None
+    ) -> set[str]:
     """Compute the connected graph based on starting LocationPoint. Return a dict
     of visible LocationPoint's names"""
     result : set[str] = cur_result
+    if not result:
+        result = set()
     for connection in connect_list:
         if not connection.is_hidden(owned_keys):
             # Connection not blocked
@@ -210,6 +212,7 @@ def compute_connected(
                     owned_keys=owned_keys,
                     cur_result=result
                 )
+    print(result)
     return result
 
 class FirstScreen(Screen):
