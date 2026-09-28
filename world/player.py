@@ -4,10 +4,10 @@ class Player:
     def __init__(
 		self,
 		possible_keys : dict[str, dict],
-		owned_keys : set[str] = {}
+		owned_keys : set[str] = set()
 		):
-        self.possible_keys = possible_keys.copy()
-        self.owned_keys = owned_keys.copy()
+        self.possible_keys : dict[str, dict] = possible_keys.copy()
+        self.owned_keys : set[str] = owned_keys.copy()
     
     def has_key(self, id : str):
         return id in self.owned_keys
