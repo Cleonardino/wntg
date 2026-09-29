@@ -218,19 +218,6 @@ def compute_connected(
                 )
     return result
 
-class FirstScreen(Screen):
-    def build(self):
-        frame = tk.Frame(self.master, bg=BG_COLOR)
-        self.make_label(frame, "This is the first screen.", 350, 300)
-        self.make_button(frame, "Go to second screen", 380, 400, self.go_next)
-        return frame
-
-    def reset_state(activated):
-        pass
-    
-    def go_next(self):
-        self.manager.show("second")
-
 def build_locationpoints(input : dict) -> dict[str, LocationPoint]:
     """Build a dictionnary of Location Points based on a serialized locationpoints dictionnary
     """

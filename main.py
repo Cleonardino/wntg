@@ -1,7 +1,7 @@
 import tkinter as tk
 from world.constants import *
-from world.screen import ScreenManager
-from world.location import FirstScreen, Location, build_locationpoints, build_connections
+from world.screen import ScreenManager, TitleScreen
+from world.location import Location, build_locationpoints, build_connections
 from world.player import Player
 from world.event_ribbon import EventRibbon
 from world.dataloader import possible_keys, locations_dict
@@ -16,7 +16,7 @@ class App(tk.Tk):
         self.event_ribbon : EventRibbon = EventRibbon(self, displayed_count=3)
         self.player : Player = Player(possible_keys)
         
-        self.manager.register("first", FirstScreen(self, self.manager, self.player, self.event_ribbon))
+        self.manager.register("first", TitleScreen(self, self.manager, self.player, self.event_ribbon))
         for packed_location in locations_dict:
             self.manager.register(
                 packed_location,

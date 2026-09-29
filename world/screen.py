@@ -88,12 +88,12 @@ class Screen:
 
     def make_label(self, parent, text, x, y):
         label = tk.Label(parent, text=text, bg=BG_COLOR, fg=FG_COLOR, font=FONT)
-        label.place(x=x, y=y)
+        label.place(x=x, y=y,anchor="center")
         return label
 
     def make_button(self, parent, text, x, y, command) -> tuple[tk.Button, tk.Frame]:
         border = tk.Frame(parent, bg=FG_COLOR, padx=2, pady=2)
-        border.place(x=x, y=y)
+        border.place(x=x, y=y,anchor="center")
 
         button = tk.Button(
             border,
@@ -116,3 +116,16 @@ class Screen:
         """Override in subclasses. Must make the screen activated or not,
         along with all its widgets. Reset all widget to the desired state."""
         raise NotImplementedError
+
+class TitleScreen(Screen):
+    def build(self):
+        frame = tk.Frame(self.master, bg=BG_COLOR)
+        self.make_label(frame, "This is the first screen.", 350, 300)
+        self.make_button(frame, "Start", 350, 400, self.go_next)
+        return frame
+
+    def reset_state(activated):
+        pass
+    
+    def go_next(self):
+        self.manager.show("second")
