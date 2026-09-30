@@ -68,8 +68,6 @@ class Location(Screen):
             owned_keys=self.player.owned_keys
         )
         
-        print(visible_locations)
-        
         # Updating accessible location points
         self.location_points[self.current_point].button.config(state=tk.NORMAL)
         for cur_name in self.location_points:
@@ -79,7 +77,6 @@ class Location(Screen):
             self.location_points[cur_name].button.config(state=tk.DISABLED, text=explored_string + cur_name + " ")
             # Display if accessible
             self.location_points[cur_name].set_button_visibility(cur_name in visible_locations)
-            print(cur_name + ":" + str(cur_name in visible_locations))
             
         for connection in self.connections:
             point_a : str = connection.point_a

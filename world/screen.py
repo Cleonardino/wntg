@@ -86,8 +86,8 @@ class Screen:
 
     # --- Helpers available to subclasses ---
 
-    def make_label(self, parent, text, x, y):
-        label = tk.Label(parent, text=text, bg=BG_COLOR, fg=FG_COLOR, font=FONT)
+    def make_label(self, parent, text, x, y, font : tuple = FONT, fg : str = FG_COLOR):
+        label = tk.Label(parent, text=text, bg=BG_COLOR, fg=fg, font=font)
         label.place(x=x, y=y,anchor="center")
         return label
 
@@ -120,8 +120,9 @@ class Screen:
 class TitleScreen(Screen):
     def build(self):
         frame = tk.Frame(self.master, bg=BG_COLOR)
-        self.make_label(frame, "This is the first screen.", WINDOW_WIDTH // 2, 300)
-        self.make_button(frame, "Start", WINDOW_WIDTH // 2, 400, self.go_next)
+        self.make_label(frame, "This is the first screen.", WINDOW_WIDTH // 2, 200, font=TITLE_FONT)
+        self.make_label(frame, "Subtitle", WINDOW_WIDTH // 2, 270, fg=FG_SHADE_COLOR)
+        self.make_button(frame, "Start", WINDOW_WIDTH // 2, 450, self.go_next)
         return frame
 
     def reset_state(activated):

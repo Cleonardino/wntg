@@ -1,10 +1,12 @@
 BG_COLOR = "black"
 FG_COLOR = "white"
+FG_SHADE_COLOR = "silver"
 
 NORMAL_M_COLOR = "white"
 IMPORT_M_COLOR = "lime"
 PLAYER_COLOR = "orange"
 FONT = ("Consolas", 14)
+TITLE_FONT = ("Consolas", 24)
 
 WINDOW_WIDTH = 960
 WINDOW_HEIGHT = 720
