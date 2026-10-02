@@ -2,8 +2,8 @@
 	"points" : {
 		"start": {
 			"desc" : "You explored start\nIt is, well... a good start I think\nThis text is really long on purpose as a matter of testing",
-			"x" : 10,
-			"y" : 10
+			"x" : 100,
+			"y" : 100
 		},
 		"mystery": {
 			"desc" : "Hello there\nIt's the first mystery",
@@ -19,18 +19,18 @@
 		},
 		"secret": {
 			"desc" : "Hello there\nYou reached a secret place",
-			"x" : 10,
-			"y" : 100
+			"x" : 100,
+			"y" : 200
 		},
 		"secret_next": {
 			"desc" : "You just passed the secret, go back",
-			"x" : 10,
-			"y" : 200
+			"x" : 100,
+			"y" : 300
 		},
 		"blocked": {
 			"desc" : "Hello there\nYou reached a blocked place",
-			"x" : 200,
-			"y" : 10
+			"x" : 300,
+			"y" : 100
 		}
 	},
 	"connections" : [

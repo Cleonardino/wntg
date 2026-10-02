@@ -91,9 +91,10 @@ class Screen:
         label.place(x=x, y=y,anchor="center")
         return label
 
-    def make_button(self, parent, text, x, y, command) -> tuple[tk.Button, tk.Frame]:
+    def make_button(self, parent, text, x, y, command, placed : bool = True) -> tuple[tk.Button, tk.Frame]:
         border = tk.Frame(parent, bg=FG_COLOR, padx=2, pady=2)
-        border.place(x=x, y=y,anchor="center")
+        if placed:
+            border.place(x=x, y=y,anchor="center")
 
         button = tk.Button(
             border,

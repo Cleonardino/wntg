@@ -25,7 +25,7 @@ class LocationPoint():
         self.given_key = given_key
         self.button : tk.Button = None
         self.border : tk.Frame = None
-        self.visible : bool = True
+        self.visible : bool = False
         self.explored : bool = False
     
     # Set visibility of button
@@ -36,7 +36,8 @@ class LocationPoint():
             # Show button and border
             self.border.place(
                 x=self.x,
-                y=self.y
+                y=self.y,
+                anchor="center"
             )
         else:
             # Hide button and border
@@ -130,7 +131,8 @@ class Location(Screen):
                 "",
                 self.location_points[cur_name].x,
                 self.location_points[cur_name].y,
-                lambda name=cur_name: self.go_to(name)
+                lambda name=cur_name: self.go_to(name),
+                False
             )
            
         self.update_location()
