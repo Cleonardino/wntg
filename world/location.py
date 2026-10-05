@@ -66,7 +66,7 @@ class Location(Screen):
         visible_locations : set[str] = compute_connected(
             connect_list=self.connections,
             cur_point=self.current_point,
-            owned_keys=self.player.owned_keys
+            owned_keys=self.player.get_book().get_owned_keys()
         )
         
         # Updating accessible location points
@@ -83,7 +83,7 @@ class Location(Screen):
             point_a : str = connection.point_a
             point_b : str = connection.point_b
             if ((point_a == self.current_point or point_b == self.current_point) and
-                not connection.is_blocked(self.player.owned_keys)
+                not connection.is_blocked(self.player.get_book().get_owned_keys)
                 ):
                 # We need : from starting point, accessible if next to it, and 
                 # if hidden, player have viewing key and if a key is also required player have it
@@ -154,9 +154,9 @@ class Location(Screen):
             self.location_points[destination].explored = True
             to_give : str = self.location_points[destination].given_key
             if to_give:
-                if self.player.add_key(to_give):
+                if self.player.get_book().add_key(to_give):
                     print("given key: " + to_give)
-                    self.event_ribbon.register_message("You found " + self.player.get_key_name(to_give))
+                    self.event_ribbon.register_message("You found " + self.player.get_book().get_key_name(to_give))
             return
         
         print("going to " + destination)

@@ -2,12 +2,44 @@ from world.constants import *
 
 class Player:
     def __init__(
-		self,
-		possible_keys : dict[str, dict],
-		owned_keys : set[str] = set()
+        self,
+        master,
+        possible_keys : dict[str, dict],
+        owned_keys : set[str] = set()
 		):
+        
+        self.book : Book = Book(
+            master=master,
+            possible_keys=possible_keys,
+            owned_keys=owned_keys
+        )
+    
+    def get_book(self):
+        return self.book
+        
+    
+    
+
+class Book():
+    """Represent the database that the player have"""
+    def __init__(self,
+                 master,
+                 possible_keys : dict[str, dict],
+                 owned_keys : set[str]):
+
+        super().__init__()
+        self.master = master
         self.possible_keys : dict[str, dict] = possible_keys.copy()
         self.owned_keys : set[str] = owned_keys.copy()
+    
+    def tkraise(self):
+        # TODO
+        # for label in self.labels:
+        #     label.tkraise()
+        pass
+    
+    def get_owned_keys(self):
+        return self.owned_keys
     
     def has_key(self, id : str):
         return id in self.owned_keys

@@ -20,6 +20,9 @@ class ScreenManager:
         self.screens[name] = screen
     
     def add_overlay(self, overlay : tk.Widget):
+        """Add an overlay to the game, which will always be displayed on top.
+        The overlay must have a tkraise method implemented that will be called
+        to keep it on top"""
         self.overlays.append(overlay)
 
     def show(self, name):
