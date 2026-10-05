@@ -23,7 +23,7 @@ class App(tk.Tk):
                 Location(
                     self,
                     self.manager,
-                    "start",
+                    locations_dict[packed_location]["start"],
                     build_locationpoints(locations_dict[packed_location]["points"]),
                     build_connections(locations_dict[packed_location]["connections"]),
                     self.player,

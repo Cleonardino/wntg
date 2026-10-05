@@ -1,4 +1,5 @@
 {
+	"start" : "start",
 	"points" : {
 		"start": {
 			"desc" : "You explored start\nIt is, well... a good start I think\nThis text is really long on purpose as a matter of testing",
