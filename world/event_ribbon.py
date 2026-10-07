@@ -4,7 +4,6 @@ import tkinter as tk
 
 class EventRibbon():
     def __init__(self, master, displayed_count : int = 10):
-        super().__init__()
         self.master = master
         self.labels : list[tk.Label] = []
         for i in range(displayed_count):
