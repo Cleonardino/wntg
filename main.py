@@ -14,7 +14,7 @@ class App(tk.Tk):
         self.configure(bg=BG_COLOR)
         self.manager = ScreenManager(self)
         self.event_ribbon : EventRibbon = EventRibbon(self, displayed_count=3)
-        self.player : Player = Player(possible_keys)
+        self.player : Player = Player(self, possible_keys=possible_keys)
         
         self.manager.register("first", TitleScreen(self, self.manager, self.player, self.event_ribbon))
         for packed_location in locations_dict:

@@ -6,7 +6,7 @@ with open(KEYS_PATH, 'r') as keys_file:
     # Construct the final key table. It is the same as in the file, except it is a dictionnary
     # with the key being the previous id field and the id field containing the index, used for positionning
     unhashed_possible_keys : list[dict] = json.load(keys_file)
-    possible_keys : dict[str, dict]
+    possible_keys : dict[str, dict] = {}
     for index, element in enumerate(unhashed_possible_keys):
         updated_element = element.copy()
         updated_element["id"] = index
