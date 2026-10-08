@@ -28,7 +28,6 @@ class Book():
                  possible_keys : dict[str, dict],
                  owned_keys : set[str]):
 
-        super().__init__()
         self.master = master
         self.possible_keys : dict[str, dict] = possible_keys.copy()
         self.owned_keys : set[str] = owned_keys.copy()
@@ -50,7 +49,10 @@ class Book():
             return False
         self.owned_keys.add(id)
         border = tk.Frame(self.master, bg=FG_COLOR, padx=2, pady=2)
-        border.place(x=WINDOW_WIDTH, y=BOOK_ELEM_HEIGHT,anchor="center")
+        # The id field of possible keys is the index which must be used
+        border.place(x=WINDOW_WIDTH,
+                     y=BOOK_ELEM_HEIGHT * self.possible_keys[id]["id"],
+                     anchor="center")
 
         self.buttons[id] = tk.Button(
             self.master,

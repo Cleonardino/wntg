@@ -31,8 +31,10 @@ class App(tk.Tk):
                     )
                 )
         
-        self.manager.show("first")
         self.manager.add_overlay(self.event_ribbon)
+        self.manager.add_overlay(self.player.book)
+        
+        self.manager.show("first")
 
 
 if __name__ == "__main__":
