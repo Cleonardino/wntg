@@ -12,6 +12,7 @@ class App(tk.Tk):
         self.title("WNTGP")
         self.geometry("{width}x{height}".format(width=WINDOW_WIDTH,height=WINDOW_HEIGHT))
         self.configure(bg=BG_COLOR)
+        self.resizable(False, False)
         self.manager = ScreenManager(self)
         self.event_ribbon : EventRibbon = EventRibbon(self, displayed_count=3)
         self.player : Player = Player(self, possible_keys=possible_keys)
