@@ -17,9 +17,6 @@ class Player:
     
     def get_book(self):
         return self.book
-        
-    
-    
 
 class Book():
     """Represent the database that the player have"""
@@ -31,10 +28,10 @@ class Book():
         self.master = master
         self.possible_keys : dict[str, dict] = possible_keys.copy()
         self.owned_keys : set[str] = owned_keys.copy()
-        self.buttons : dict[str, tk.Button] = {}
+        self.widgets : dict[str, tuple[tk.Frame, tk.Button]] = {}
     
     def tkraise(self):
-        for button in self.buttons:
+        for frame, button in self.widgets:
             button.tkraise()
     
     def get_owned_keys(self):
@@ -48,20 +45,23 @@ class Book():
         if self.has_key(id):
             return False
         self.owned_keys.add(id)
-        border = tk.Frame(self.master, bg=FG_COLOR, padx=2, pady=2)
+        frame = tk.Frame(self.master, bg=FG_COLOR, padx=2, pady=2)
         # The id field of possible keys is the index which must be used
-        border.place(x=WINDOW_WIDTH,
-                     y=BOOK_ELEM_HEIGHT * self.possible_keys[id]["id"],
+        frame.place(x=WINDOW_WIDTH * 0.9,
+                     y=BOOK_ELEM_HEIGHT * self.possible_keys[id]["id"] + 25,
                      anchor="center")
 
-        self.buttons[id] = tk.Button(
-            self.master,
+        button = tk.Button(
+            frame,
             text=id,
             fg=FG_COLOR,
             bg=BG_COLOR,
             font=FONT
             )
-        self.buttons[id].pack()
+        button.pack(anchor="center")
+        
+        self.widgets[id] = (frame, button)
+
         return True
     
     def get_key_name(self, id : str) -> bool:
