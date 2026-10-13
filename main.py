@@ -18,6 +18,7 @@ class App(tk.Tk):
         self.player : Player = Player(self, possible_keys=possible_keys)
         
         self.manager.register("first", TitleScreen(self, self.manager, self.player, self.event_ribbon))
+        self.manager.register("book", self.player.book)
         for packed_location in locations_dict:
             self.manager.register(
                 packed_location,
@@ -33,7 +34,6 @@ class App(tk.Tk):
                 )
         
         self.manager.add_overlay(self.event_ribbon)
-        self.manager.add_overlay(self.player.book)
         
         self.manager.show("first")
 

@@ -1,5 +1,6 @@
 from world.constants import *
 import tkinter as tk
+from world.screen import Screen
 
 class Player:
     def __init__(
@@ -17,8 +18,10 @@ class Player:
     
     def get_book(self):
         return self.book
+    
+    # TODO make book a special overlay
 
-class Book():
+class Book(Screen):
     """Represent the database that the player have"""
     def __init__(self,
                  master,
@@ -30,9 +33,9 @@ class Book():
         self.owned_keys : set[str] = owned_keys.copy()
         self.widgets : dict[str, tuple[tk.Frame, tk.Button]] = {}
     
-    def tkraise(self):
-        for frame, button in self.widgets:
-            button.tkraise()
+    def build(self):
+        self.make_button(self.frame, "Return", WINDOW_WIDTH // 2, 450, self.manager.set_book_state(False))
+        return self.frame
     
     def get_owned_keys(self):
         return self.owned_keys

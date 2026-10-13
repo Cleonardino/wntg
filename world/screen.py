@@ -14,8 +14,10 @@ class ScreenManager:
         self.overlays : list[tk.Widget] = [] # List of widget to keep in front
         self.screens : dict[str, Screen] = {}  # name -> Screen instance
         self.current_screen : Screen = None
+        self.previous_screen : Screen = None
         self.desc_button : tk.Button = None
-
+        self.book_opened : bool = False
+        
     def register(self, name, screen):
         self.screens[name] = screen
     
@@ -25,6 +27,18 @@ class ScreenManager:
         to keep it on top"""
         self.overlays.append(overlay)
 
+    def set_book_state(self, opened : bool):
+        """Set the book state (opened or not)"""
+        if opened == self.book_opened:
+            return
+        if opened:
+            # Open the book
+            self.previous_screen = self.current_screen
+            self.show("book")
+        else:
+            # Close the book
+            self.show(self.previous_screen)
+    
     def show(self, name):
         if name not in self.screens:
             raise ValueError(f"Screen '{name}' not found in registry")
@@ -34,6 +48,7 @@ class ScreenManager:
 
         screen = self.screens[name]
         screen.get_frame().place(x=0, y=0, relwidth=1, relheight=1)
+        self.previous_screen = self.current_screen
         self.current_screen = screen
         for overlay in self.overlays:
             overlay.tkraise()
